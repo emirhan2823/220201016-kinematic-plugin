@@ -1,0 +1,58 @@
+{
+  "name": "training_01",
+  "description": "Compatibility mission for the original student animation integration spec. The active N8RO setup uses the app's AstsimSchema JSON.GZ profiles; this file documents the same intent for reviewers expecting the starter-pack mission name.",
+  "controller": {
+    "type": "kinematic_com_contact_informed",
+    "plugin": "student-com-kinematic-plugin.dll",
+    "animationModel": "animationModelNathanHuman",
+    "defaultAnimation": "Student CoM Walk"
+  },
+  "entities": [
+    {
+      "id": "NeutralCivilian_01",
+      "type": "Human",
+      "model": "human_model_nathan.glb",
+      "animationModel": "animationModelNathanHuman",
+      "supportedAnimations": [
+        "Student CoM Walk",
+        "Student CoM Push",
+        "Student CoM Climb"
+      ]
+    },
+    {
+      "id": "NeutralDuplexHome_01",
+      "type": "House",
+      "role": "nearby obstacle / scene reference"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "goto_house",
+      "type": "GOTO",
+      "entity": "NeutralCivilian_01",
+      "target": "NeutralDuplexHome_01",
+      "animation": "Student CoM Walk"
+    },
+    {
+      "id": "push_contact",
+      "type": "PUSH",
+      "entity": "NeutralCivilian_01",
+      "target": "NeutralDuplexHome_01",
+      "animation": "Student CoM Push"
+    },
+    {
+      "id": "climb_step",
+      "type": "CLIMB",
+      "entity": "NeutralCivilian_01",
+      "target": "NeutralDuplexHome_01",
+      "animation": "Student CoM Climb"
+    }
+  ],
+  "notes": [
+    "No torques, forces, or rigid-body dynamics are computed by the plugin.",
+    "Motion is produced by joint-angle overrides.",
+    "Center of Mass is estimated inside the plugin and used to bias the kinematic pose.",
+    "Contact is represented through a replaceable contact-state hook; the current N8RO SDK headers used here do not expose explicit foot-contact flags to AnimationModelInput."
+  ]
+}
+
