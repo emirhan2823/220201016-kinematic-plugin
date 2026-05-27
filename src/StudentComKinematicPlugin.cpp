@@ -203,7 +203,7 @@ void addOverrideIfAvailable(arkheon::astsim::AnimationModelOutput& output,
     const double elbowBendDynamic = 0.5 * (1.0 - std::cos(2.0 * cycle)) * 0.10;
     const double shoulderBob = 0.06 * std::sin(2.0 * cycle);
 
-    output.clearExistingJointOverrides = true;
+    output.clearExistingJointOverrides = false;
     output.jointOverrides.clear();
 
     addOverrideIfAvailable(output, availableJointIds, "spineLower", pose.trunkPitch * 0.55, pose.trunkRoll * 0.35, -pose.trunkRoll * 0.70);
@@ -242,7 +242,7 @@ void addOverrideIfAvailable(arkheon::astsim::AnimationModelOutput& output,
     const double kneeBend = 0.42 + 0.12 * counter;
     const double ankleCounter = -0.22 - 0.08 * counter;
 
-    output.clearExistingJointOverrides = true;
+    output.clearExistingJointOverrides = false;
     output.jointOverrides.clear();
 
     addOverrideIfAvailable(output, availableJointIds, "spineLower", trunkPitch * 0.65, 0.0, 0.0);
@@ -279,7 +279,7 @@ void addOverrideIfAvailable(arkheon::astsim::AnimationModelOutput& output,
     const double liftRight = std::max(0.0, -cycle);
     const double trunkPitch = -0.28 + 0.06 * std::sin(t * 4.2);
 
-    output.clearExistingJointOverrides = true;
+    output.clearExistingJointOverrides = false;
     output.jointOverrides.clear();
 
     addOverrideIfAvailable(output, availableJointIds, "spineLower", trunkPitch * 0.55, 0.05 * cycle, -0.08 * cycle);
