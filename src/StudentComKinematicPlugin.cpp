@@ -160,8 +160,8 @@ void applyBalanceCorrection(KinematicPose& pose, const ContactState& contact)
     const double lateralError = contact.supportX - com.x;
     const double foreAftError = contact.supportZ - com.z;
 
-    const double trunkRollCorrection = clamp(lateralError * 0.75, -0.12, 0.12);
-    const double trunkPitchCorrection = clamp(foreAftError * 0.55, -0.10, 0.10);
+    const double trunkRollCorrection = clamp(lateralError * 0.35, -0.06, 0.06);
+    const double trunkPitchCorrection = clamp(foreAftError * 0.35, -0.06, 0.06);
 
     pose.trunkRoll += trunkRollCorrection;
     pose.trunkPitch += trunkPitchCorrection;
@@ -201,17 +201,17 @@ void addOverrideIfAvailable(arkheon::astsim::AnimationModelOutput& output,
 
     const double armSwingSmooth = pose.armSwing;
     const double elbowBendDynamic = 0.5 * (1.0 - std::cos(2.0 * cycle)) * 0.10;
-    const double shoulderBob = 0.06 * std::sin(2.0 * cycle);
+    const double shoulderBob = 0.015 * std::sin(2.0 * cycle);
 
     output.clearExistingJointOverrides = false;
     output.jointOverrides.clear();
 
-    addOverrideIfAvailable(output, availableJointIds, "spineLower", pose.trunkPitch * 0.55, pose.trunkRoll * 0.35, -pose.trunkRoll * 0.70);
-    addOverrideIfAvailable(output, availableJointIds, "spineUpper", pose.trunkPitch * 0.45, pose.trunkRoll * 0.55, -pose.trunkRoll * 0.45);
+    addOverrideIfAvailable(output, availableJointIds, "spineLower", pose.trunkPitch * 0.55, pose.trunkRoll * 0.25, -pose.trunkRoll * 0.35);
+    addOverrideIfAvailable(output, availableJointIds, "spineUpper", pose.trunkPitch * 0.45, pose.trunkRoll * 0.35, -pose.trunkRoll * 0.25);
     addOverrideIfAvailable(output, availableJointIds, "head", -pose.trunkPitch * 0.45, 0.0, pose.trunkRoll * 0.35);
 
-    addOverrideIfAvailable(output, availableJointIds, "leftHip", pose.leftHipPitch, pose.trunkRoll * 0.30, -0.04);
-    addOverrideIfAvailable(output, availableJointIds, "rightHip", pose.rightHipPitch, pose.trunkRoll * 0.30, 0.04);
+    addOverrideIfAvailable(output, availableJointIds, "leftHip", pose.leftHipPitch, pose.trunkRoll * 0.15, -0.04);
+    addOverrideIfAvailable(output, availableJointIds, "rightHip", pose.rightHipPitch, pose.trunkRoll * 0.15, 0.04);
     addOverrideIfAvailable(output, availableJointIds, "leftKnee", pose.leftKnee, 0.0, 0.0);
     addOverrideIfAvailable(output, availableJointIds, "rightKnee", pose.rightKnee, 0.0, 0.0);
     addOverrideIfAvailable(output, availableJointIds, "leftAnkle", pose.leftAnkle, 0.0, 0.0);
